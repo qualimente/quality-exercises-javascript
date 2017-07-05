@@ -1,13 +1,19 @@
-import { TestBed, async } from '@angular/core/testing';
+import {TestBed, async} from '@angular/core/testing';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
+import {AddressComponent} from './address/address.component';
+import {AddressService} from './common/address.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        AddressComponent
       ],
+      providers: [
+       AddressService
+      ]
     }).compileComponents();
   }));
 
