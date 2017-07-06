@@ -31,7 +31,7 @@ export class AddressComponent implements OnInit {
         State: ${address.state}
         Postal Code: ${address.postalCode}
         Country: ${address.country}
-      `
+      `;
   }
 
   shouldSelectAddress(address: Address, city: string): boolean {
