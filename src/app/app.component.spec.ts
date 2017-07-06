@@ -3,6 +3,7 @@ import {TestBed, async} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {AddressComponent} from './address/address.component';
 import {AddressService} from './common/address.service';
+import {AddressValidatorService} from './common/address-validator.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -12,7 +13,8 @@ describe('AppComponent', () => {
         AddressComponent
       ],
       providers: [
-       AddressService
+        AddressService,
+        AddressValidatorService
       ]
     }).compileComponents();
   }));

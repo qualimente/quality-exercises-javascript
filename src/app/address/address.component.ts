@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AddressService} from '../common/address.service';
 import {Address} from '../common/address.model';
+import {AddressValidatorService} from '../common/address-validator.service';
 
 @Component({
   selector: 'app-address',
@@ -8,16 +9,22 @@ import {Address} from '../common/address.model';
   styleUrls: ['./address.component.css']
 })
 export class AddressComponent implements OnInit {
-  countryCodes = ['CA', 'DE', 'FR', 'IT', 'JP', 'RU', 'US', 'UK'];
   selectedCity = 'Peoria';
   addresses: Address[];
   printableAddresses: string[];
   selectedAddress: Address;
 
-  constructor(private addressService: AddressService) {
+  constructor(private addressService: AddressService,
+              private addressValidator: AddressValidatorService) { }
+
+  ngOnInit() {
     this.addresses = this.addressService.getAddresses();
-    this.printableAddresses = this.addresses.map(address => {
-      return `
+    this.printableAddresses = this.addresses.map(address => this.makePrintableAddress(address));
+    this.selectedAddress = this.addresses.find(address => this.shouldSelectAddress(address, this.selectedCity));
+  }
+
+  makePrintableAddress(address: Address): string {
+    return `
         Line 1: ${address.line1}
         Line 2: ${address.line2}
         City: ${address.city}
@@ -25,14 +32,13 @@ export class AddressComponent implements OnInit {
         Postal Code: ${address.postalCode}
         Country: ${address.country}
       `
-    });
-    this.selectedAddress = this.addresses.find(address => address.city === this.selectedCity);
   }
 
-  ngOnInit() {
+  shouldSelectAddress(address: Address, city: string): boolean {
+    return address.city === city;
   }
 
-  isCountryCodeValid(): boolean {
-    return this.countryCodes.indexOf(this.selectedAddress.country) !== -1;
+  isCountryCodeValid(address: Address): boolean {
+    return this.addressValidator.isCountryCodeValid(address);
   }
 }

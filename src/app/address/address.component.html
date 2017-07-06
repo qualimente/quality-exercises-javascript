@@ -1,5 +1,6 @@
 <h2>Selected Address</h2>
 <pre>{{selectedAddress | json}}</pre>
+<strong>Is the country valid?</strong> {{isCountryCodeValid(selectedAddress)}}
 
 <h2>Addresses</h2>
 <div *ngFor="let address of printableAddresses">
